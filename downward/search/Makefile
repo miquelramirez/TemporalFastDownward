@@ -30,7 +30,7 @@ DEPEND = g++ -MM
 
 CCOPT  =
 CCOPT += #-m32
-CCOPT += -Wall -W -Wno-sign-compare -ansi -pedantic -Werror
+CCOPT += -Wall -W -Wno-sign-compare -ansi -pedantic -Werror -std=c++20
 
 LINKOPT  =
 LINKOPT += #-m32

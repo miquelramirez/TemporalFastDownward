@@ -14,8 +14,8 @@ class TimeStampedState;
 
 struct Prevail
 {
-    int var;
-    double prev;
+    int var = -1;
+    double prev = 0.0;
     Prevail(istream &in);
     Prevail(int v, double p) :
         var(v), prev(p)
@@ -40,14 +40,14 @@ struct Prevail
 
 struct PrePost
 {
-    int var;
-    double pre;
-    int var_post;
-    double post;
+    int var = -1;
+    double pre = 0.0;
+    int var_post = -1;
+    double post = 0.0;
     vector<Prevail> cond_start;
     vector<Prevail> cond_overall;
     vector<Prevail> cond_end;
-    assignment_op fop;
+    assignment_op fop = assignment_op::assign;
 
     PrePost()
     {
@@ -77,7 +77,7 @@ struct PrePost
 
 struct ScheduledEffect : public PrePost
 {
-    double time_increment;
+    double time_increment = 0.0;
     ScheduledEffect(double t, vector<Prevail> &cas, vector<Prevail> &coa, vector<Prevail> &cae,
         int va, int vi, assignment_op op) :
         PrePost(va, -1.0, vi, -1.0, cas, coa, cae, op), time_increment(t)
@@ -283,6 +283,9 @@ class TimeStampedState
         TimeStampedState let_time_pass(
             bool go_to_intermediate_between_now_and_next_happening = false,
             bool skip_eps_steps = false) const;
+
+        TimeStampedState& operator=(const TimeStampedState& ) = default;
+
         int getNumberOfEpsTimeSteps(double offset) const;
 
         double &operator[](int index)

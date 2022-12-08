@@ -49,8 +49,8 @@ typedef hashmap::value_type ValuePair;
 class LocalTransition
 {
     public:
-        double target_cost;
-        int duration_var_local;
+        double target_cost = 0.0;
+        int duration_var_local = -1;
         const ValueTransitionLabel *label;
         virtual LocalProblemNode* get_source() = 0;
         virtual void on_condition_reached(int, double) = 0;
@@ -183,7 +183,7 @@ class LocalTransitionDiscrete: public LocalTransition
             return source;
         }
 
-        int unreached_conditions;
+        int unreached_conditions = 0;
 
         LocalTransitionDiscrete(ValueTransitionLabel *the_label,
                 LocalProblemNodeDiscrete *the_source,
