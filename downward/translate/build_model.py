@@ -310,7 +310,7 @@ if __name__ == "__main__":
     import pddl_to_prolog
 
     print("Parsing...")
-    task = pddl.open()
+    task = pddl.start_process()
     print("Writing rules...")
     prog = pddl_to_prolog.translate(task)
     print("Computing model...")

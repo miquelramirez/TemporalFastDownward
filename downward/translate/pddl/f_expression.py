@@ -65,7 +65,10 @@ def parse_assignment(alist, durative=False):
 class FunctionalExpression(object):
     def __init__(self, parts):
         self.parts = tuple(parts)
-        self.hash = hash((self.__class__, self.parts))
+        try:
+            self.hash = hash((self.__class__, self.parts))
+        except TypeError as e:
+            raise SystemExit("Error hashing: {} {}".format(self.__class__, self.parts))
 
     def __hash__(self):
         return self.hash
@@ -151,6 +154,8 @@ class Quotient(ArithmeticExpression):
         else:
             return self._propagate(parts)
 
+    def __hash__(self):
+        return hash((self.op, self.parts))
 
 class Difference(ArithmeticExpression):
     op = "-"
@@ -165,6 +170,8 @@ class Difference(ArithmeticExpression):
         else:
             return self._propagate(parts)
 
+    def __hash__(self):
+        return hash((self.op, self.parts))
 
 class AdditiveInverse(ArithmeticExpression):
     op = "-"
@@ -176,6 +183,8 @@ class AdditiveInverse(ArithmeticExpression):
     def _simplified(self, parts):
         return self._propagate(parts)
 
+    def __hash__(self):
+        return hash((self.op, self.parts))
 
 class Sum(ArithmeticExpression):
     op = "+"
@@ -193,6 +202,8 @@ class Sum(ArithmeticExpression):
             return result_parts[0]
         return Sum(result_parts)
 
+    def __hash__(self):
+        return hash((self.op, self.parts))
 
 class Product(ArithmeticExpression):
     op = "*"
@@ -211,6 +222,9 @@ class Product(ArithmeticExpression):
         if len(result_parts) == 1:
             return result_parts[0]
         return Product(result_parts)
+
+    def __hash__(self):
+        return hash((self.op, self.parts))
 
 
 class NumericConstant(FunctionalExpression):
@@ -368,6 +382,9 @@ class FunctionAssignment(object):
 
 class Assign(FunctionAssignment):
     symbol = "="
+
+    def __hash__(self):
+        return hash((self.symbol, self.fluent, self.expression))
 
     def __str__(self):
         return "%s := %s" % (self.fluent, self.expression)

@@ -3,6 +3,7 @@
 
 from collections import defaultdict
 
+import pddl
 import build_model
 import normalize  # because of "get_function_predicate"
 import pddl_to_prolog
@@ -144,7 +145,7 @@ def explore(task):
 if __name__ == "__main__":
     import pddl
 
-    task = pddl.open()
+    task = pddl.start_process()
     (relaxed_reachable, atoms, num_fluents, actions, durative_actions,
      axioms, num_axioms,
      reachable_action_params) = explore(task)

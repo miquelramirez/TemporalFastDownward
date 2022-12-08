@@ -218,6 +218,6 @@ def test_normalization():
 if __name__ == "__main__":
     # test_normalization()
 
-    task = pddl.open()
+    task = pddl.start_process()
     prog = translate(task)
     prog.dump()

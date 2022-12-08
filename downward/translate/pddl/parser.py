@@ -13,7 +13,7 @@ def parse_nested_list(input_file):
         raise ParseError("Expected '(', got %s." % next_token)
     result = list(parse_list_aux(tokens))
     for tok in tokens:  # Check that generator is exhausted.
-        raise ParseError("Unexpected token: %s." % tok)
+        raise ParseError("Unexpected token: {} rest: {}.".format(tok, list(tokens)[1:]))
     return result
 
 

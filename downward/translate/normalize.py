@@ -687,6 +687,6 @@ def add_either_rules(type, rules):
 
 
 if __name__ == "__main__":
-    task = pddl.open()
+    task = pddl.start_process()
     normalize(task)
     task.dump()

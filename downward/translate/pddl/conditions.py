@@ -522,6 +522,12 @@ class FunctionComparison(Condition):  # comparing numerical functions
             self.parts = tuple(parts)
         self.hash = hash((self.__class__, self.comparator, self.parts))
 
+    def __hash__(self):
+        return self.hash
+
+    def __lt__(self, other):
+        return len(self.parts) < len(other.parts)
+
     def _dump(self, indent="  "):
         return "%s %s" % (self.__class__.__name__, self.comparator)
 

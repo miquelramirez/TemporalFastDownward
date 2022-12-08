@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! /usr/bin/env python3
 # -*- coding: latin-1 -*-
 
 from __future__ import print_function
@@ -811,7 +811,9 @@ def pddl_to_sas(task):
     print("Building STRIPS to SAS dictionary...")
     ranges, strips_to_sas = strips_to_sas_dictionary(groups, num_axioms, num_axiom_map, num_fluents)
     print("Translating task...")
-    assert not actions, "There shouldn't be any actions - just temporal actions"
+    #assert not actions, "There shouldn't be any actions - just temporal actions"
+    if len(actions) > 0:
+        print("PPI has non-durative actions")
     sas_task = translate_task(strips_to_sas, ranges, task.init, goal_list,
                               actions, durative_actions, axioms, num_axioms,
                               num_axioms_by_layer, max_num_layer, num_axiom_map,
@@ -902,7 +904,7 @@ if __name__ == "__main__":
     import builtins
 
     builtins.containsQuantifiedConditions = False
-    task = pddl.open()
+    task = pddl.start_process()
     if task.domain_name in ["protocol", "rover"]:
         # This is, of course, a HACK HACK HACK!
         # The real issue is that ALLOW_CONFLICTING_EFFECTS = True

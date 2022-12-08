@@ -4,5 +4,5 @@
 import pddl
 
 if __name__ == "__main__":
-    task = pddl.open()
+    task = pddl.start_process()
     task.dump()

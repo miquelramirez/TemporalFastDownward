@@ -5,6 +5,7 @@ import itertools
 import time
 from collections import deque, defaultdict
 
+import pddl
 import invariants
 import timers
 
@@ -117,10 +118,10 @@ def find_invariants(task, safe, reachable_action_params):
             candidates.append(invariant)
             seen_candidates.add(invariant)
 
-    start_time = time.clock()
+    start_time = time.time()
     while candidates:
         candidate = candidates.popleft()
-        if time.clock() - start_time > MAX_TIME:
+        if time.time() - start_time > MAX_TIME:
             print("Time limit reached, aborting invariant generation")
             return
         if candidate.check_balance(balance_checker, enqueue_func):
@@ -161,7 +162,7 @@ if __name__ == "__main__":
     import pddl
 
     print("Parsing...")
-    task = pddl.open()
+    task = pddl.start_process()
     print("Finding invariants...")
     for invariant in find_invariants(task):
         print(invariant)
