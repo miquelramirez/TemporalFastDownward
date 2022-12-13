@@ -128,6 +128,9 @@ class Effect(object):
         self.condition = condition
         self.peffect = peffect  # literal or function assignment
 
+    def __hash__(self):
+        return hash((tuple(self.parameters), tuple(self.condition), self.peffect))
+
     def __eq__(self, other):
         return (self.__class__ is other.__class__ and
                 self.parameters == other.parameters and

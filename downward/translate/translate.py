@@ -1,8 +1,6 @@
 #! /usr/bin/env python3
 # -*- coding: latin-1 -*-
 
-from __future__ import print_function
-
 import copy
 import itertools
 
@@ -43,6 +41,7 @@ def strips_to_sas_dictionary(groups, num_axioms, num_axiom_map, num_fluents):
         assert all(len(sas_pairs) == 1
                    for sas_pairs in dictionary.values())
 
+    print(num_axiom_map)
     redundant_axioms = []
     num_ax_count = 0
     for axiom in num_axioms:
@@ -52,7 +51,13 @@ def strips_to_sas_dictionary(groups, num_axioms, num_axiom_map, num_fluents):
             dictionary.setdefault(axiom.effect, []).append((num_ax_count + len(groups), -2))
             num_ax_count += 1
     for axiom_effect in redundant_axioms:
-        dictionary[axiom_effect] = dictionary[num_axiom_map[axiom_effect].effect]
+        print("Axiom effect", axiom_effect, axiom_effect in dictionary)
+        print("Numeric axiom", num_axiom_map[axiom_effect])
+        print("Corresponding axiom", num_axiom_map[axiom_effect].effect, num_axiom_map[axiom_effect].effect in dictionary)
+        try:
+            dictionary[axiom_effect] = dictionary[num_axiom_map[axiom_effect].effect]
+        except KeyError:
+            dictionary[axiom_effect] = axiom_effect
 
     ranges = [len(group) + 1 for group in groups] + [-1] * num_ax_count
 

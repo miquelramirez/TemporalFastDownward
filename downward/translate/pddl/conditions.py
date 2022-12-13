@@ -668,6 +668,9 @@ class Variable(Term):
         self.name = name
         self.hash = hash((self.__class__, self.name))
 
+    def __lt__(self, other):
+        return self.name < other.name
+
     def __eq__(self, other):
         return (self.__class__ is other.__class__ and
                 self.name == other.name)

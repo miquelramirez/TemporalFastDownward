@@ -196,6 +196,9 @@ class Invariant(object):
         self.predicate_to_part = dict([(part.predicate, part) for part in parts])
         assert len(self.parts) == len(self.predicates)
 
+    def __lt__(self, other):
+        return len(self.parts) < len(other.parts)
+
     def __eq__(self, other):
         return self.__class__ == other.__class__ and self.parts == other.parts
 
