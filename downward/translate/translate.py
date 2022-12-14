@@ -41,23 +41,25 @@ def strips_to_sas_dictionary(groups, num_axioms, num_axiom_map, num_fluents):
         assert all(len(sas_pairs) == 1
                    for sas_pairs in dictionary.values())
 
-    print(num_axiom_map)
-    redundant_axioms = []
-    num_ax_count = 0
+    print("translate.strips_to_sas_dictionary: checking contents of num_axioms")
     for axiom in num_axioms:
-        if axiom.effect in num_axiom_map:
-            redundant_axioms.append(axiom.effect)
-        else:
-            dictionary.setdefault(axiom.effect, []).append((num_ax_count + len(groups), -2))
-            num_ax_count += 1
-    for axiom_effect in redundant_axioms:
-        print("Axiom effect", axiom_effect, axiom_effect in dictionary)
-        print("Numeric axiom", num_axiom_map[axiom_effect])
-        print("Corresponding axiom", num_axiom_map[axiom_effect].effect, num_axiom_map[axiom_effect].effect in dictionary)
-        try:
-            dictionary[axiom_effect] = dictionary[num_axiom_map[axiom_effect].effect]
-        except KeyError:
-            dictionary[axiom_effect] = axiom_effect
+        axiom.dump()
+    print("translate.strips_to_sas_dictionary: checking contents of num_axiom_map")
+    for head, definition in num_axiom_map.items():
+        print('{} -> {} type: {}'.format(str(head), str(definition), type(definition)))
+        definition.dump()
+
+    num_ax_count = 0
+
+    for head, definition in num_axiom_map.items():
+        dictionary[definition.effect] = [(num_ax_count + len(groups), -2)]
+        num_ax_count += 1
+
+    for axiom in num_axioms:
+        if axiom.effect in dictionary:
+            continue
+        dictionary[axiom.effect] = [(num_ax_count + len(groups), -2)]
+        num_ax_count += 1
 
     ranges = [len(group) + 1 for group in groups] + [-1] * num_ax_count
 
