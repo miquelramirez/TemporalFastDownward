@@ -22,7 +22,7 @@ def main():
     config, domain, problem, result_name = sys.argv[1:]
 
     # run translator
-    run("python3", translate/translate.py", domain, problem)
+    run("python3", "translate/translate.py", domain, problem)
 
     # run preprocessing
     run("preprocess/preprocess", input="output.sas")
