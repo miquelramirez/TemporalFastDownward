@@ -11,6 +11,14 @@ A slightly modified version of Temporal Fast Downward.
 
 * `$ ./build`
 
+## Usage
+
+```bash
+./plan.py "y+Y+a+e+r+O+1+C+1+b" <domain>.pddl <instance>.pddl plan.out
+```
+
+`plan.out` will contain a PDDL plan representation.
+
 ## Citation
 
 Patrick Eyerich, Robert Mattmüller and Gabriele Röger.
